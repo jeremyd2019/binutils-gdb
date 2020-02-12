@@ -34,6 +34,9 @@
 #include "solib.h"
 #include "solib-target.h"
 #include "gdbcore.h"
+#include "coff/internal.h"
+#include "libcoff.h"
+#include "solist.h"
 
 struct cmd_list_element *info_w32_cmdlist;
 
@@ -461,6 +464,53 @@ init_w32_command_list (void)
     }
 }
 
+/* Implement the "solib_create_inferior_hook" target_so_ops method.  */
+
+static void
+windows_solib_create_inferior_hook (int from_tty)
+{
+  CORE_ADDR exec_base = 0;
+
+  /* Find base address of main executable in
+     TIB->process_environment_block->image_base_address.  */
+  struct gdbarch *gdbarch = target_gdbarch ();
+  enum bfd_endian byte_order = gdbarch_byte_order (gdbarch);
+  int ptr_bytes;
+  int peb_offset;  /* Offset of process_environment_block in TIB.  */
+  int base_offset; /* Offset of image_base_address in PEB.  */
+  if (gdbarch_ptr_bit (gdbarch) == 32)
+    {
+      ptr_bytes = 4;
+      peb_offset = 48;
+      base_offset = 8;
+    }
+  else
+    {
+      ptr_bytes = 8;
+      peb_offset = 96;
+      base_offset = 16;
+    }
+  CORE_ADDR tlb;
+  gdb_byte buf[8];
+  if (target_get_tib_address (inferior_ptid, &tlb)
+      && !target_read_memory (tlb + peb_offset, buf, ptr_bytes))
+    {
+      CORE_ADDR peb = extract_unsigned_integer (buf, ptr_bytes, byte_order);
+      if (!target_read_memory (peb + base_offset, buf, ptr_bytes))
+	exec_base = extract_unsigned_integer (buf, ptr_bytes, byte_order);
+    }
+
+  /* Rebase executable if the base address changed because of ASLR.  */
+  if (symfile_objfile != nullptr && exec_base != 0)
+    {
+      CORE_ADDR vmaddr = pe_data (exec_bfd)->pe_opthdr.ImageBase;
+      if (vmaddr != exec_base)
+	objfile_rebase (symfile_objfile, exec_base - vmaddr);
+    }
+}
+
+static struct target_so_ops windows_so_ops;
+
 /* To be called from the various GDB_OSABI_CYGWIN handlers for the
    various Windows architectures and machine types.  */
 
@@ -477,7 +527,10 @@ windows_init_abi (struct gdbarch_info info, struct gdbarch *gdbarch)
   set_gdbarch_iterate_over_objfiles_in_search_order
     (gdbarch, windows_iterate_over_objfiles_in_search_order);
 
-  set_solib_ops (gdbarch, &solib_target_so_ops);
+  windows_so_ops = solib_target_so_ops;
+  windows_so_ops.solib_create_inferior_hook
+    = windows_solib_create_inferior_hook;
+  set_solib_ops (gdbarch, &windows_so_ops);
 }
 
 /* Implementation of `tlb' variable.  */
