@@ -5,7 +5,7 @@
 #objdump: -s -j .text
 #skip: ia64-*-* mips*-*-freebsd* mips*-*-gnu* mips*-*-irix* mips*-*-kfreebsd*
 #skip: mips*-*-linux* mips*-*-netbsd* mips*-*-openbsd* mips*-*-sysv4*
-#skip: tilegx*-*-* tilepro-*-* x86_64-*-cygwin x86_64-*-mingw* x86_64-*-pe*
+#skip: tilegx*-*-* tilepro-*-* x86_64-*-cygwin x86_64-*-msys x86_64-*-mingw* x86_64-*-pe*
 #xfail: alpha*-*-*ecoff sh-*-pe sparc*-*-coff
 #xfail: tic30-*-coff tic4x-*-* tic54x-*-* z8k-*-*
 #

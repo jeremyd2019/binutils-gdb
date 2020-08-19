@@ -144,7 +144,7 @@ proc default_binutils_assemble_flags { source object asflags } {
 #	Returns target executable extension, if any.
 #
 proc exe_ext {} {
-    if { [istarget *-*-mingw*] || [istarget *-*-cygwin*] } {
+    if { [istarget *-*-mingw*] || [istarget *-*-cygwin*] || [istarget *-*-msys*] } {
         return ".exe"
     } else {
         return ""

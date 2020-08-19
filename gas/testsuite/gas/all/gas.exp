@@ -164,8 +164,8 @@ case $target_triplet in {
 	# failures.
 	setup_xfail "bfin-*-*" "i\[3-7\]86-*-*coff" \
 	    "i\[3-7\]86-*-*pe" "i\[3-7\]86-*-go32*" \
-	    "i\[3-7\]86-*-cygwin*" "i\[3-7\]86-*-mingw*" \
-	    "x86_64-*-cygwin*" "x86_64-*-mingw*"
+	    "i\[3-7\]86-*-cygwin*" "i\[3-7\]86-*-msys*" "i\[3-7\]86-*-mingw*" \
+	    "x86_64-*-cygwin*" "x86_64-*-msys*" "x86_64-*-mingw*"
 	run_dump_test redef3
 	gas_test_error "redef4.s" "" ".set for symbol already used as label"
 	gas_test_error "redef5.s" "" ".set for symbol already defined through .comm"
@@ -313,6 +313,7 @@ if {   ([istarget *-*-coff*] && ![istarget arm*-*-coff] && ![istarget *c4x*-*-co
      || [istarget i*86-*-isc*] \
      || [istarget i*86-*-go32*] \
      || [istarget i*86-*-cygwin*] \
+     || [istarget i*86-*-msys*] \
      || [istarget x86_64-*-mingw*] \
      || [istarget i*86-*-*nt] \
      || [istarget i*86-*-interix*] } {
@@ -360,6 +361,7 @@ case $target_triplet in {
 
 if {  ([istarget "i*86-*-*pe*"] && ![istarget "i*86-*-openbsd*"]) \
     || [istarget "i*86-*-cygwin*"] \
+    || [istarget "i*86-*-msys*"] \
     || [istarget "i*86-*-mingw32*"] } {
   gas_test "fastcall.s" ""   "" "fastcall labels"
 }

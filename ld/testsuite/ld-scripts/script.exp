@@ -163,6 +163,10 @@ proc extract_symbol_test { testfile testname } {
 	    pass $testname
 	    return
 	}
+	[a-z]*-*-msys$ {
+	    pass $testname
+	    return
+	}
     }
 
     set extract_syms [run_host_cmd $nm $copyfile]
@@ -185,6 +189,7 @@ proc extract_symbol_test { testfile testname } {
 set flags ""
 if {[istarget "*-*-pe*"] \
     || [istarget "*-*-cygwin*"] \
+    || [istarget "*-*-msys*"] \
     || [istarget "*-*-mingw*"] \
     || [istarget "*-*-winnt*"] \
     || [istarget "*-*-nt"] \

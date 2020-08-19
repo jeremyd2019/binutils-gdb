@@ -118,6 +118,7 @@ run_ver_script_test "vers-script-3"
 run_ver_script_test "vers-script-4"
 
 if {[istarget i*86-*-cygwin*]
+    || [istarget i*86-*-msys*]
     || [istarget i*86-*-pe]
     || [istarget i*86-*-mingw*]
     || [istarget x86_64-*-mingw*] } {

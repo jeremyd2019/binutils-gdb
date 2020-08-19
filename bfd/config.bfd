@@ -699,7 +699,7 @@ case "${targ}" in
     targ_archs="$targ_archs bfd_arm_arch"
     want64=true
     ;;
-  x86_64-*-mingw* | x86_64-*-pe | x86_64-*-pep | x86_64-*-cygwin)
+  x86_64-*-mingw* | x86_64-*-pe | x86_64-*-pep | x86_64-*-cygwin | x86_64-*-msys*)
     targ_defvec=x86_64_pe_vec
     targ_selvecs="x86_64_pe_vec x86_64_pei_vec x86_64_pe_be_vec x86_64_elf64_vec l1om_elf64_vec k1om_elf64_vec i386_pe_vec i386_pei_vec i386_elf32_vec iamcu_elf32_vec"
     want64=true
@@ -749,7 +749,7 @@ case "${targ}" in
     targ_defvec=i386_elf32_vec
     targ_selvecs="iamcu_elf32_vec i386_coff_vec"
     ;;
-  i[3-7]86-*-mingw32* | i[3-7]86-*-cygwin* | i[3-7]86-*-winnt | i[3-7]86-*-pe)
+  i[3-7]86-*-mingw32* | i[3-7]86-*-cygwin* | i[3-7]86-*-msys* | i[3-7]86-*-winnt | i[3-7]86-*-pe)
     targ_defvec=i386_pe_vec
     targ_selvecs="i386_pe_vec i386_pei_vec i386_elf32_vec iamcu_elf32_vec"
     targ_underscore=yes
@@ -1162,7 +1162,7 @@ case "${targ}" in
     targ_selvecs="rs6000_xcoff_vec powerpc_elf32_vec powerpc_boot_vec"
     targ64_selvecs="powerpc_elf64_vec powerpc_elf64_le_vec"
     ;;
-  powerpcle-*-pe | powerpcle-*-winnt* | powerpcle-*-cygwin*)
+  powerpcle-*-pe | powerpcle-*-winnt* | powerpcle-*-cygwin* | powerpcle-*-msys*)
     targ_defvec=powerpc_pe_le_vec
     targ_selvecs="powerpc_pei_le_vec powerpc_pei_vec powerpc_pe_le_vec powerpc_pe_vec"
     ;;

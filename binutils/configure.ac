@@ -284,7 +284,7 @@ do
 	  BUILD_WINDRES='$(WINDRES_PROG)$(EXEEXT)'
 	  BUILD_WINDMC='$(WINDMC_PROG)$(EXEEXT)'
 	  ;;
-	x86_64-*-mingw* | x86_64-*-cygwin*)
+	x86_64-*-mingw* | x86_64-*-cygwin* | x86_64-*-msys*)
   	  BUILD_DLLTOOL='$(DLLTOOL_PROG)$(EXEEXT)'
 	  if test -z "$DLLTOOL_DEFAULT"; then
 	    DLLTOOL_DEFAULT="-DDLLTOOL_DEFAULT_MX86_64"
@@ -295,7 +295,7 @@ do
 	  BUILD_DLLWRAP='$(DLLWRAP_PROG)$(EXEEXT)'
 	  ;;
 changequote(,)dnl
-	i[3-7]86-*-pe* | i[3-7]86-*-cygwin* | i[3-7]86-*-mingw32** | i[3-7]86-*-netbsdpe*)
+	i[3-7]86-*-pe* | i[3-7]86-*-cygwin* | i[3-7]86-*-msys* | i[3-7]86-*-mingw32** | i[3-7]86-*-netbsdpe*)
 changequote([,])dnl
   	  BUILD_DLLTOOL='$(DLLTOOL_PROG)$(EXEEXT)'
 	  if test -z "$DLLTOOL_DEFAULT"; then
@@ -324,7 +324,7 @@ changequote(,)dnl
 changequote([,])dnl
 	  OBJDUMP_DEFS="-DAIX_WEAK_SUPPORT"
 	  ;;
-	powerpc*-*-pe* | powerpc*-*-cygwin*)
+	powerpc*-*-pe* | powerpc*-*-cygwin* | powerpc*-*-msys*)
   	  BUILD_DLLTOOL='$(DLLTOOL_PROG)$(EXEEXT)'
 	  if test -z "$DLLTOOL_DEFAULT"; then
 	    DLLTOOL_DEFAULT="-DDLLTOOL_DEFAULT_PPC"

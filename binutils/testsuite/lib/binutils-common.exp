@@ -98,6 +98,7 @@ proc is_pecoff_format {} {
     if { [istarget *-*-beospe*]
 	 || [istarget *-*-cegcc*]
 	 || [istarget *-*-cygwin*]
+	 || [istarget *-*-msys*]
 	 || [istarget *-*-interix*]
 	 || [istarget *-*-mingw*]
 	 || [istarget *-*-netbsdpe*]

@@ -23,7 +23,7 @@
 #
  
 # This test can only be run on a cygwin platforms.
-if {![istarget *-pc-cygwin]} {
+if {![istarget *-*-cygwin]} && ![istarget *-*-msys*]} {
     verbose "Not a cygwin target."
     return
 }

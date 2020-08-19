@@ -599,7 +599,7 @@ strip_test_with_saving_a_symbol
 
 # Build a final executable.
 
-if { [istarget *-*-cygwin] || [istarget *-*-mingw*] } {
+if { [istarget *-*-cygwin] || [istarget *-*-mingw*] || [istarget *-*-msys*] } {
     set test_prog "testprog.exe"
 } else {
     set test_prog "testprog"
@@ -705,6 +705,7 @@ proc copy_executable { prog flags test1 test2 } {
 	setup_xfail "arm*-*-pe"
 	setup_xfail "*-*-mingw*"
 	setup_xfail "*-*-cygwin*"
+	setup_xfail "*-*-msys*"
 
 	fail $test1
     }

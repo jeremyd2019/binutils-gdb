@@ -209,6 +209,7 @@ static const autofilter_entry_type autofilter_symbollist_i386[] =
   { STRING_COMMA_LEN ("_NULL_IMPORT_DESCRIPTOR") },
   /* Entry point symbols, and entry hooks.  */
   { STRING_COMMA_LEN ("cygwin_crt0") },
+  { STRING_COMMA_LEN ("msys_crt0") },
 #ifdef pe_use_x86_64
   { STRING_COMMA_LEN ("DllMain") },
   { STRING_COMMA_LEN ("DllEntryPoint") },
@@ -216,6 +217,9 @@ static const autofilter_entry_type autofilter_symbollist_i386[] =
   { STRING_COMMA_LEN ("_cygwin_dll_entry") },
   { STRING_COMMA_LEN ("_cygwin_crt0_common") },
   { STRING_COMMA_LEN ("_cygwin_noncygwin_dll_entry") },
+  { STRING_COMMA_LEN ("_msys_dll_entry") },
+  { STRING_COMMA_LEN ("_msys_crt0_common") },
+  { STRING_COMMA_LEN ("_msys_nonmsys_dll_entry") },
 #else
   { STRING_COMMA_LEN ("DllMain@12") },
   { STRING_COMMA_LEN ("DllEntryPoint@0") },
@@ -224,6 +228,10 @@ static const autofilter_entry_type autofilter_symbollist_i386[] =
   { STRING_COMMA_LEN ("_cygwin_crt0_common@8") },
   { STRING_COMMA_LEN ("_cygwin_noncygwin_dll_entry@12") },
   { STRING_COMMA_LEN ("cygwin_attach_dll") },
+  { STRING_COMMA_LEN ("_msys_dll_entry@12") },
+  { STRING_COMMA_LEN ("_msys_crt0_common@8") },
+  { STRING_COMMA_LEN ("_msys_nonmsys_dll_entry@12") },
+  { STRING_COMMA_LEN ("msys_attach_dll") },
 #endif
   { STRING_COMMA_LEN ("cygwin_premain0") },
   { STRING_COMMA_LEN ("cygwin_premain1") },
@@ -327,6 +335,7 @@ static const autofilter_entry_type autofilter_liblist[] =
 {
   { STRING_COMMA_LEN ("libcegcc") },
   { STRING_COMMA_LEN ("libcygwin") },
+  { STRING_COMMA_LEN ("libmsys-2.0") },
   { STRING_COMMA_LEN ("libgcc") },
   { STRING_COMMA_LEN ("libgcc_s") },
   { STRING_COMMA_LEN ("libstdc++") },

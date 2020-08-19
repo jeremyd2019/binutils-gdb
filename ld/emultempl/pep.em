@@ -7,7 +7,7 @@ else
 fi
 
 case ${target} in
-  *-*-cygwin*)
+  *-*-cygwin* | *-*-msys*)
     move_default_addr_high=1
     ;;
   *)

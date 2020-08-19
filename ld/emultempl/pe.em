@@ -174,7 +174,7 @@ EOF
 # merge_rdata defaults to 0 for cygwin:
 #  http://cygwin.com/ml/cygwin-apps/2013-04/msg00187.html
 case ${target} in
-  *-*-cygwin*)
+  *-*-cygwin* | *-*-msys*)
     default_auto_import=1
     default_merge_rdata=0
     ;;

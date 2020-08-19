@@ -22,6 +22,7 @@ if {![istarget "i*86-*-*"]
 
 if {![istarget "i*86-*-*pe*"] \
     && ![istarget "i*86-*-cygwin*"] \
+    && ![istarget "i*86-*-msys*"] \
     && ![istarget "i*86-*-mingw32*"] \
     && ![istarget "arm-*-pe*"] \
     && ![istarget "x86_64-*-mingw*"] } {

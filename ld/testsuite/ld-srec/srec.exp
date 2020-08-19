@@ -412,7 +412,7 @@ setup_xfail "ia64-*-*"
 # The S-record linker doesn't support the special PE headers - the PE
 # emulation tries to write pe-specific information to the PE headers
 # in the output bfd, but it's not a PE bfd (it's an srec bfd)
-setup_xfail "*-*-cygwin*" "*-*-mingw*" "*-*-pe*" "*-*-winnt*"
+setup_xfail "*-*-cygwin*" "*-*-msys*" "*-*-mingw*" "*-*-pe*" "*-*-winnt*"
 setup_xfail "score-*-*"
 
 # The S-record linker doesn't support Blackfin ELF FDPIC ABI.
@@ -462,7 +462,7 @@ setup_xfail "alpha*-*-elf*" "alpha*-*-linux-*" "alpha*-*-gnu*"
 setup_xfail "alpha*-*-netbsd*"
 setup_xfail "hppa*-*-*" "mep-*-*"
 setup_xfail "ia64-*-*"
-setup_xfail "*-*-cygwin*" "*-*-mingw*" "*-*-pe*" "*-*-winnt*"
+setup_xfail "*-*-cygwin*" "*-*-msys*" "*-*-mingw*" "*-*-pe*" "*-*-winnt*"
 setup_xfail "score-*-*"
 setup_xfail "bfin-*-linux-uclibc"
 setup_xfail "tile*-*-*"

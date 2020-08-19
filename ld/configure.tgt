@@ -385,7 +385,7 @@ i[3-7]86-*-winnt*)	targ_emul=i386pe ;
 i[3-7]86-*-pe)		targ_emul=i386pe ;
 			targ_extra_ofiles="deffilep.o pe-dll.o"
 			;;
-i[3-7]86-*-cygwin*)	targ_emul=i386pe ;
+i[3-7]86-*-cygwin* | i[3-7]86-*-msys*)	targ_emul=i386pe ;
 			targ_extra_ofiles="deffilep.o pe-dll.o" ;
 			test "$targ" != "$host" && LIB_PATH='${tooldir}/lib/w32api'
 			;;
@@ -731,7 +731,7 @@ powerpcle-*-nto*)	targ_emul=elf32lppcnto
 powerpc-*-macos*)	targ_emul=ppcmacos
 			targ_extra_ofiles=
 			;;
-powerpcle-*-pe | powerpcle-*-winnt* | powerpcle-*-cygwin*)
+powerpcle-*-pe | powerpcle-*-winnt* | powerpcle-*-cygwin* | powerpcle-*-msys*)
 			targ_emul=ppcpe
 			targ_extra_ofiles="deffilep.o pe-dll.o"
 			;;
@@ -988,7 +988,7 @@ x86_64-*-pe | x86_64-*-pep) targ_emul=i386pep ;
 			targ_extra_emuls=i386pe ;
 			targ_extra_ofiles="deffilep.o pep-dll.o pe-dll.o"
 			;;
-x86_64-*-cygwin)	targ_emul=i386pep ;
+x86_64-*-cygwin | x86_64-*-msys*)	targ_emul=i386pep ;
 			targ_extra_emuls=i386pe
 			targ_extra_ofiles="deffilep.o pep-dll.o pe-dll.o"
 			test "$targ" != "$host" && LIB_PATH='${tooldir}/lib/w32api'
@@ -1073,6 +1073,10 @@ spu-*-elf*)
   ;;
 
 i[03-9x]86-*-cygwin* | x86_64-*-cygwin*)
+  NATIVE_LIB_DIRS='/usr/lib /usr/lib/w32api'
+  ;;
+
+i[03-9x]86-*-msys* | x86_64-*-msys*)
   NATIVE_LIB_DIRS='/usr/lib /usr/lib/w32api'
   ;;
 

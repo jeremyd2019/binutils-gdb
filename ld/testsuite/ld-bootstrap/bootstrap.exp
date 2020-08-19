@@ -134,7 +134,7 @@ foreach flags $test_flags {
 
     # On Cygwin, -lintl may require -liconv when linking statically.
     set extralibs ""
-    if { [istarget "*-*-cygwin*"]} {
+    if { [istarget "*-*-cygwin*"] || [istarget "*-*-msys*"] } {
 	if {"$flags" == "--static"} {
 	    set extralibs "-liconv"
 	}
@@ -205,6 +205,7 @@ foreach flags $test_flags {
     if {[istarget "*-*-pe"]
 	|| [istarget "*-*-wince"]
 	|| [istarget "*-*-cygwin*"]
+	|| [istarget "*-*-msys*"]
 	|| [istarget "*-*-winnt*"]
 	|| [istarget "*-*-mingw*"]
 	|| [istarget "*-*-interix*"]

@@ -300,6 +300,11 @@ changequote([,])dnl
     SHARED_LIBADD="-L`pwd`/../libiberty -liberty -L`pwd`/../intl -lintl -lcygwin -lkernel32"
   ;;
 
+  *-*-msys*)
+    SHARED_LDFLAGS="-no-undefined"
+    SHARED_LIBADD="-L`pwd`/../libiberty -liberty -L`pwd`/../intl -lintl -lmsys-2.0 -lkernel32"
+  ;;
+
   # Use built-in libintl on macOS, since it is not provided by libc.
   *-*-darwin*)
     SHARED_LIBADD="-L`pwd`/../libiberty/pic -L`pwd`/../intl -liberty -lintl"

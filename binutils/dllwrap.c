@@ -78,6 +78,7 @@ static int is_leading_underscore = -1;
 typedef enum {
   UNKNOWN_TARGET,
   CYGWIN_TARGET,
+  MSYS_TARGET,
   MINGW_TARGET
 }
 target_type;
@@ -832,6 +833,8 @@ Creating one, but that may not be what you want"));
   /* Set the target platform.  */
   if (strstr (target, "cygwin"))
     which_target = CYGWIN_TARGET;
+  else if (strstr (target, "msys"))
+    which_target = MSYS_TARGET;
   else if (strstr (target, "mingw"))
     which_target = MINGW_TARGET;
   else
@@ -883,6 +886,10 @@ Creating one, but that may not be what you want"));
 	  driver_flags = cygwin_driver_flags;
 	  break;
 
+    case MSYS_TARGET:
+	  driver_flags = cygwin_driver_flags;
+	  break;
+
 	case MINGW_TARGET:
 	  driver_flags = mingw32_driver_flags;
 	  break;
@@ -914,6 +921,10 @@ Creating one, but that may not be what you want"));
 	{
 	case CYGWIN_TARGET:
 	  name_entry = "_cygwin_dll_entry";
+	  break;
+
+	case MSYS_TARGET:
+	  name_entry = "_msys_dll_entry";
 	  break;
 
 	case MINGW_TARGET:
@@ -979,7 +990,7 @@ Creating one, but that may not be what you want"));
 	{
 	  dyn_string_append_cstr (step_pre1, " --export-all --exclude-symbol=");
 	  dyn_string_append_cstr (step_pre1,
-	  "_cygwin_dll_entry@12,DllMainCRTStartup@12,DllMain@12,DllEntryPoint@12");
+	  "_cygwin_dll_entry@12,_msys_dll_entry@12,DllMainCRTStartup@12,DllMain@12,DllEntryPoint@12");
 	}
       dyn_string_append_cstr (step_pre1, " --output-def ");
       dyn_string_append_cstr (step_pre1, def_file_name);

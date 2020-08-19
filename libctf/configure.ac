@@ -188,6 +188,12 @@ changequote([,])dnl
       BFD_LIBADD="-L`pwd`/../bfd -lbfd"
       ;;
 
+    *-*-msys*)
+      SHARED_LDFLAGS="-no-undefined"
+      SHARED_LIBADD="-L`pwd`/../libiberty -liberty -L`pwd`/../intl -lintl -lmsys-2.0"
+      BFD_LIBADD="-L`pwd`/../bfd -lbfd"
+      ;;
+
     *-*-darwin*)
       BFD_LIBADD="-Wl,`pwd`/../bfd/.libs/libbfd.dylib"
       BFD_DEPENDENCIES="../bfd/libbfd.la"

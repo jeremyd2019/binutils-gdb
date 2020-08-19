@@ -244,7 +244,7 @@ case ${generic_target} in
   i386-*-msdos*)			fmt=aout ;;
   i386-*-moss*)				fmt=elf ;;
   i386-*-pe)				fmt=coff em=pe ;;
-  i386-*-cygwin*)
+  i386-*-cygwin* | i386-*-msys*)
    case ${cpu} in
      x86_64*)				fmt=coff em=pep ;;
      i*)				fmt=coff em=pe ;;

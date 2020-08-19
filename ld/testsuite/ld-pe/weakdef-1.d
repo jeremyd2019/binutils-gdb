@@ -1,5 +1,5 @@
 #source: weakdef-1.s
-#target: i*86-*-cygwin* i*86-*-pe i*86-*-mingw*
+#target: i*86-*-cygwin* i*86-*-msys* i*86-*-pe i*86-*-mingw*
 #ld: -e _start --gc-sections
 #objdump: -d
 
