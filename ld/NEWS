@@ -1,5 +1,8 @@
 -*- text -*-
 
+* The creation of PE format DLLs now defaults to using a more secure set of DLL
+  characteristics.
+
 Changes in 2.34:
 
 * The ld check for "PHDR segment not covered by LOAD segment" is more
