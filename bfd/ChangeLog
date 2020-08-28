@@ -1,3 +1,10 @@
+2020-08-28  Nick Clifton  <nickc@redhat.com>
+
+	PR19011
+	* cofflink.c (_bfd_coff_generic_relocate_section): Provide a value
+	for undefined symbols which will not generate extra warning
+	messages about truncated relocs.
+
 2020-08-11  Szabolcs Nagy  <szabolcs.nagy@arm.com>
 
 	Backport from mainline.
