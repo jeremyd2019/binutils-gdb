@@ -11,6 +11,13 @@
 	* emultempl/pe.em (_finish): Only generate a import library if not
 	exporting relocs.
 	* emultempl/pep.em: Likewise.
+2020-08-30  Jeremy Drake  <sourceware-bugzilla@jdrake.com>
+
+	PR 19011
+	* emultempl/pe.em (DEFAULT_DLL_CHARACTERISTICS): Revert to 0.
+	* emultempl/pep.em: Likewise.
+	* ld.texi: Document the reverted defaults.
+	* NEWS: Mention the reverted defaults.
 
 2020-08-28  Nick Clifton  <nickc@redhat.com>
 

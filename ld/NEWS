@@ -3,6 +3,8 @@
 * The creation of PE format DLLs now defaults to using a more secure set of DLL
   characteristics.
 
+* These defaults are temporarily reverted until more testing is done.
+
 Changes in 2.35:
 
 * X86 NaCl target support is removed.
