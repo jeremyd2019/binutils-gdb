@@ -159,7 +159,7 @@ static int support_old_code = 0;
 static lang_assignment_statement_type *image_base_statement = 0;
 static unsigned short pe_dll_characteristics = DEFAULT_DLL_CHARACTERISTICS;
 static bfd_boolean insert_timestamp = TRUE;
-static bfd_boolean high_default_bases = TRUE;
+static bfd_boolean high_default_bases = FALSE;
 static const char *emit_build_id;
 
 #ifdef DLL_SUPPORT
