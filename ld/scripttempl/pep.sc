@@ -41,10 +41,12 @@ if test "${RELOCATING}"; then
     KEEP (SORT(*)(.idata$6))
     KEEP (SORT(*)(.idata$7))'
   R_DIDAT234='
+    __DELAY_IMPORT_DIRECTORY_start__ = .;
     KEEP (SORT(*)(.didat$2))
     KEEP (SORT(*)(.didat$3))
+    __DELAY_IMPORT_DIRECTORY_end__ = .;
     /* These zeroes mark the end of the import list.  */
-    LONG (0); LONG (0); LONG (0); LONG (0); LONG (0);
+    . += (__DELAY_IMPORT_DIRECTORY_end__ - __DELAY_IMPORT_DIRECTORY_start__) ? 8*4 : 0;
     . = ALIGN(8);
     KEEP (SORT(*)(.didat$4))'
   R_DIDAT5='SORT(*)(.didat$5)'
@@ -146,6 +148,12 @@ SECTIONS
     ${RELOCATING+__rt_psrelocs_start = .;}
     ${RELOCATING+KEEP(*(.rdata_runtime_pseudo_reloc))}
     ${RELOCATING+__rt_psrelocs_end = .;}
+    /* read-only parts of .didat */
+    /* This cannot currently be handled with grouped sections.
+	See pe.em:sort_sections.  */
+    ${RELOCATING+. = ALIGN(8);}
+    ${R_DIDAT234}
+    ${R_DIDAT67}
 
     /* .ctors & .dtors */
     ${CONSTRUCTING+. = ALIGN(8);}
@@ -269,11 +277,7 @@ SECTIONS
   {
     /* This cannot currently be handled with grouped sections.
 	See pep.em:sort_sections.  */
-    ${R_DIDAT234}
-    ${RELOCATING+__DELAY_IAT_start__ = .;}
     ${R_DIDAT5}
-    ${RELOCATING+__DELAY_IAT_end__ = .;}
-    ${R_DIDAT67}
   }
 
   /* Windows TLS expects .tls\$AAA to be at the start and .tls\$ZZZ to be
