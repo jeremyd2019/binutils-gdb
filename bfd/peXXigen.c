@@ -593,7 +593,7 @@ _bfd_XXi_swap_aouthdr_out (bfd * abfd, void * in, void * out)
   struct internal_extra_pe_aouthdr *extra = &pe->pe_opthdr;
   PEAOUTHDR *aouthdr_out = (PEAOUTHDR *) out;
   bfd_vma sa, fa, ib;
-  IMAGE_DATA_DIRECTORY idata2, idata5, tls;
+  IMAGE_DATA_DIRECTORY idata2, idata5, tls, loadcfg;
 
   sa = extra->SectionAlignment;
   fa = extra->FileAlignment;
@@ -602,6 +602,7 @@ _bfd_XXi_swap_aouthdr_out (bfd * abfd, void * in, void * out)
   idata2 = pe->pe_opthdr.DataDirectory[PE_IMPORT_TABLE];
   idata5 = pe->pe_opthdr.DataDirectory[PE_IMPORT_ADDRESS_TABLE];
   tls = pe->pe_opthdr.DataDirectory[PE_TLS_TABLE];
+  loadcfg = pe->pe_opthdr.DataDirectory[PE_LOAD_CONFIG_TABLE];
 
   if (aouthdr_in->tsize)
     {
@@ -651,6 +652,7 @@ _bfd_XXi_swap_aouthdr_out (bfd * abfd, void * in, void * out)
   extra->DataDirectory[PE_IMPORT_TABLE]  = idata2;
   extra->DataDirectory[PE_IMPORT_ADDRESS_TABLE] = idata5;
   extra->DataDirectory[PE_TLS_TABLE] = tls;
+  extra->DataDirectory[PE_LOAD_CONFIG_TABLE] = loadcfg;
 
   if (extra->DataDirectory[PE_IMPORT_TABLE].VirtualAddress == 0)
     /* Until other .idata fixes are made (pending patch), the entry for
@@ -4558,7 +4560,7 @@ _bfd_XXi_final_link_postscript (bfd * abfd, struct coff_final_link_info *pfinfo)
       else
 	{
 	  _bfd_error_handler
-	    (_("%pB: unable to fill in DataDictionary[9] because __tls_used is missing"),
+	    (_("%pB: unable to fill in DataDictionary[9] because _tls_used is not defined correctly"),
 	     abfd);
 	  result = false;
 	}
@@ -4571,6 +4573,48 @@ _bfd_XXi_final_link_postscript (bfd * abfd, struct coff_final_link_info *pfinfo)
 #else
       pe_data (abfd)->pe_opthdr.DataDirectory[PE_TLS_TABLE].Size = 0x28;
 #endif
+    }
+
+  h1 = coff_link_hash_lookup (coff_hash_table (info),
+			      (bfd_get_symbol_leading_char (abfd) != 0
+			       ? "__load_config_used" : "_load_config_used"),
+			      false, false, true);
+  if (h1 != NULL)
+    {
+      char data[4];
+      if ((h1->root.type == bfd_link_hash_defined
+	   || h1->root.type == bfd_link_hash_defweak)
+	  && h1->root.u.def.section != NULL
+	  && h1->root.u.def.section->output_section != NULL)
+	{
+	  pe_data (abfd)->pe_opthdr.DataDirectory[PE_LOAD_CONFIG_TABLE].VirtualAddress =
+	    (h1->root.u.def.value
+	     + h1->root.u.def.section->output_section->vma
+	     + h1->root.u.def.section->output_offset
+	     - pe_data (abfd)->pe_opthdr.ImageBase);
+
+	  /* the size is stored as the first 4 bytes at _load_config_used */
+	  if (bfd_get_section_contents (abfd,
+		h1->root.u.def.section->output_section, data,
+		h1->root.u.def.section->output_offset + h1->root.u.def.value,
+		4))
+	    pe_data (abfd)->pe_opthdr.DataDirectory[PE_LOAD_CONFIG_TABLE].Size =
+	      bfd_get_32 (abfd, data);
+	  else
+	    {
+	      _bfd_error_handler
+		(_("%pB: unable to fill in DataDictionary[10] because the size can't be read"),
+		 abfd);
+	      result = false;
+	    }
+	}
+      else
+	{
+	  _bfd_error_handler
+	    (_("%pB: unable to fill in DataDictionary[10] because _load_config_used is not defined correctly"),
+	     abfd);
+	  result = false;
+	}
     }
 
 /* If there is a .pdata section and we have linked pdata finally, we
