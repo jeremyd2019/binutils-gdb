@@ -4403,6 +4403,7 @@ _bfd_XXi_final_link_postscript (bfd * abfd, struct coff_final_link_info *pfinfo)
   struct coff_link_hash_entry *h1;
   struct bfd_link_info *info = pfinfo->info;
   bool result = true;
+  char name[20];
 
   /* There are a few fields that need to be filled in now while we
      have symbol table access.
@@ -4430,8 +4431,8 @@ _bfd_XXi_final_link_postscript (bfd * abfd, struct coff_final_link_info *pfinfo)
       else
 	{
 	  _bfd_error_handler
-	    (_("%pB: unable to fill in DataDictionary[1] because .idata$2 is missing"),
-	     abfd);
+	    (_("%pB: unable to fill in DataDirectory[%d]: %s not defined correctly"),
+	     abfd, PE_IMPORT_TABLE, ".idata$2");
 	  result = false;
 	}
 
@@ -4450,8 +4451,8 @@ _bfd_XXi_final_link_postscript (bfd * abfd, struct coff_final_link_info *pfinfo)
       else
 	{
 	  _bfd_error_handler
-	    (_("%pB: unable to fill in DataDictionary[1] because .idata$4 is missing"),
-	     abfd);
+	    (_("%pB: unable to fill in DataDirectory[%d]: %s not defined correctly"),
+	     abfd, PE_IMPORT_TABLE, ".idata$4");
 	  result = false;
 	}
 
@@ -4471,8 +4472,8 @@ _bfd_XXi_final_link_postscript (bfd * abfd, struct coff_final_link_info *pfinfo)
       else
 	{
 	  _bfd_error_handler
-	    (_("%pB: unable to fill in DataDictionary[12] because .idata$5 is missing"),
-	     abfd);
+	    (_("%pB: unable to fill in DataDirectory[%d]: %s not defined correctly"),
+	     abfd, PE_IMPORT_ADDRESS_TABLE, ".idata$5");
 	  result = false;
 	}
 
@@ -4491,8 +4492,8 @@ _bfd_XXi_final_link_postscript (bfd * abfd, struct coff_final_link_info *pfinfo)
       else
 	{
 	  _bfd_error_handler
-	    (_("%pB: unable to fill in DataDictionary[PE_IMPORT_ADDRESS_TABLE (12)] because .idata$6 is missing"),
-	     abfd);
+	    (_("%pB: unable to fill in DataDirectory[%d]: %s not defined correctly"),
+	     abfd, PE_IMPORT_ADDRESS_TABLE, ".idata$6");
 	  result = false;
 	}
     }
@@ -4533,17 +4534,16 @@ _bfd_XXi_final_link_postscript (bfd * abfd, struct coff_final_link_info *pfinfo)
 	  else
 	    {
 	      _bfd_error_handler
-		(_("%pB: unable to fill in DataDictionary[PE_IMPORT_ADDRESS_TABLE(12)]"
-		   " because .idata$6 is missing"), abfd);
+		(_("%pB: unable to fill in DataDirectory[%d]: %s not defined correctly"),
+		 abfd, PE_IMPORT_ADDRESS_TABLE, "__IAT_end__");
 	      result = false;
 	    }
 	}
     }
 
-  h1 = coff_link_hash_lookup (coff_hash_table (info),
-			      (bfd_get_symbol_leading_char (abfd) != 0
-			       ? "__tls_used" : "_tls_used"),
-			      false, false, true);
+  name[0] = bfd_get_symbol_leading_char (abfd);
+  strcpy (name + !!name[0], "_tls_used");
+  h1 = coff_link_hash_lookup (coff_hash_table (info), name, false, false, true);
   if (h1 != NULL)
     {
       if ((h1->root.type == bfd_link_hash_defined
@@ -4558,8 +4558,8 @@ _bfd_XXi_final_link_postscript (bfd * abfd, struct coff_final_link_info *pfinfo)
       else
 	{
 	  _bfd_error_handler
-	    (_("%pB: unable to fill in DataDictionary[9] because __tls_used is missing"),
-	     abfd);
+	    (_("%pB: unable to fill in DataDirectory[%d]: %s not defined correctly"),
+	     abfd, PE_TLS_TABLE, name);
 	  result = false;
 	}
      /* According to PECOFF sepcifications by Microsoft version 8.2
