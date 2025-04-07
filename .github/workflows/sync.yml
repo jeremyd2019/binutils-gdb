@@ -13,6 +13,6 @@ jobs:
         fetch-depth: 0
         ref: jeremyd2019-repo-sync
     - run: |
-        git remote add upstream https://sourceware.org/git/binutils-gdb.git
+        git remote add upstream git://sourceware.org/git/binutils-gdb.git
         git fetch -f upstream 'refs/heads/*:refs/heads/*' 'refs/tags/*:refs/tags/*'
         git push -f origin 'refs/heads/*:refs/heads/*' 'refs/tags/*:refs/tags/*'
