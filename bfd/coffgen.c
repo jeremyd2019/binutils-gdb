@@ -3141,6 +3141,7 @@ coff_gc_sweep (bfd *abfd ATTRIBUTE_UNUSED, struct bfd_link_info *info)
 	  else if (startswith (o->name, ".idata")
 		   || startswith (o->name, ".pdata")
 		   || startswith (o->name, ".xdata")
+		   || startswith (o->name, ".didat")
 		   || startswith (o->name, ".rsrc"))
 	    o->gc_mark = 1;
 
